@@ -78,7 +78,7 @@ class AppwriteManager():
 # end cards--------
 
     def updateCardArtURLAttributes(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       self.log.info("\n jsonResponse : \n" + str(jsonResponse) + "\n \n \n")
@@ -96,7 +96,7 @@ class AppwriteManager():
       return cardArtURLList
 
     def getAllCardArtURLAttributes(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       cardArtURLList = []
@@ -113,7 +113,7 @@ class AppwriteManager():
       return cardArtURLList
       
     def updateCardDescriptionAttributes(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       self.log.info("\n jsonResponse : \n" + str(jsonResponse) + "\n \n \n")
@@ -130,7 +130,7 @@ class AppwriteManager():
       return newDescriptionsList
 
     def cleanResetCollectionDocuments(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       deletedDocuments = []
@@ -150,7 +150,7 @@ class AppwriteManager():
       return { "deleted documentID" : str(documentID) }
       
     def getAllCardData(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       cardArtURLList = []
@@ -204,7 +204,7 @@ class AppwriteManager():
       return cardArtURLList
 
     def getAllMonarchCardData(self, collectionID):# payload will have the documentID
-      url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
+      url = self.ENDPOINT + "/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       cardArtURLList = []
