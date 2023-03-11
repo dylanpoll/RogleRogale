@@ -153,9 +153,6 @@ if __name__ == '__main__':
     socket.setdefaulttimeout(600) # seconds
     app.run(host=HOST, port=PORT, debug=True)
 
-    # openai.organization = "org-o6qA7OG1FMPpp0oAFX37RUns"
-    # openai.api_key = os.getenv("OPENAI_API_KEY")
-
 # @app.route('/api/add_message/<uuid>', methods=['GET', 'POST'])  # https://stackoverflow.com/questions/20001229/how-to-get-posted-json-in-flask
 # def add_message(uuid):
 #     content = request.get_json(silent=True)
