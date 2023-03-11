@@ -10,9 +10,9 @@ from flask import Flask, jsonify, request, send_from_directory
 from AppwriteManager import AppwriteManager
 from CardRNGGenerationManager import CardRNGGenerationManager
 
-logging.basicConfig(filename='/home/dylan/RogleRogale/pythonFlaskRebuild/RogleRogaleFlaskLogs.log', level=logging.DEBUG)
-
 load_dotenv()
+logging.basicConfig(filename=str( os.getenv("LOG_FILE_LOCATION") ), level=logging.DEBUG)
+
 appwriterUtil = AppwriteManager(log = logging)
 # cardGenerationUtil = CardRNGGenerationManager(log = logging)
 app = Flask(__name__)
