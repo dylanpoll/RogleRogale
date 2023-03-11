@@ -2,7 +2,19 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+consts.js
+logs.txt
+helpers/.env
+.env
+public/sadad.html
+public/dasd.html
+public/gitignored
+notes
+pythonFlaskRebuild/.env
+pythonFlaskRebuild/__pycache__
+pythonFlaskRebuild/RogelRogaleUE4.23
+pythonFlaskRebuild/RogleRogaleFlaskLogs.log
+RogelRogaleUE4.23
 # C extensions
 *.so
 
