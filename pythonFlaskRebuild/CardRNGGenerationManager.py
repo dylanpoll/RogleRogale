@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 class CardRNGGenerationManager():
     def __init__(self, log):
       self.log = log
-      self.DYLAN_OPENAI_API_KEY = str( os.getenv("DYLAN_OPENAI_API_KEY") )
+      self.OPENAI_API_KEY = str( os.getenv("OPENAI_API_KEY") )
       self.ORGANIZATION_ID_OPENAI = str( os.getenv("ORGANIZATION_ID_OPENAI") )
       self.HOST_URL = str( os.getenv("HOST_URL") )
       self.status = [
@@ -35,7 +35,7 @@ class CardRNGGenerationManager():
         "Woman","Man","Gender-Fluid"
       ]
       self.races = RACES
-      self.name_prefixes = NAME_PREFIXES,
+      self.name_prefixes = NAME_PREFIXES
       self.name_suffixes = NAME_SUFFIXES
       self.name_decorators = NAME_DECORATORS
       self.woman_names = WOMAN_NAMES
@@ -69,7 +69,7 @@ class CardRNGGenerationManager():
       return {"cardName": fullName, "race": selectedRace, "gender" : gender}
 
     def generateCardArt(self, prompt):
-      cardArt = requests.request("POST", "https://api.openai.com/v1/images/generations", headers={ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + self.DYLAN_OPENAI_API_KEY } , data = json.dumps({ "prompt": str(prompt), "n": 1, "size": "256x256" }) ).json()
+      cardArt = requests.request("POST", "https://api.openai.com/v1/images/generations", headers={ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + self.OPENAI_API_KEY } , data = json.dumps({ "prompt": str(prompt), "n": 1, "size": "256x256" }) ).json()
       try:
         cardArtURL = str(cardArt['data'][0]['url'])
         # self.log.info(cardArtURL)
@@ -80,9 +80,9 @@ class CardRNGGenerationManager():
         return False
 
     def generateDescription(self, content):    
-      description = requests.request("POST", "https://api.openai.com/v1/chat/completions", headers={ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + self.DYLAN_OPENAI_API_KEY } , data = json.dumps({ "model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": str(content) }]}) ).json()
+      description = requests.request("POST", "https://api.openai.com/v1/chat/completions", headers={ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + self.OPENAI_API_KEY } , data = json.dumps({ "model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": str(content) }]}) ).json()
       try:
-        returnedDescription = str(description['choices'][0]['message']['content'])
+        returnedDescription = str(description['choices'][0]['message']['content'])[2:-1]
         # self.log.info(returnedDescription)
         return returnedDescription # grabbing the url from the generation
       except Exception as e:
