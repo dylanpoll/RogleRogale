@@ -19,6 +19,7 @@ app = Flask(__name__)
 
 PORT = int( os.getenv("PORT") )
 HOST = str( os.getenv("HOST") )
+HOST_DOMAIN = str( os.getenv("HOST_DOMAIN") )
 DYLAN_OPENAI_API_KEY = str( os.getenv("DYLAN_OPENAI_API_KEY") )
 ORGANIZATION_ID_OPENAI = str( os.getenv("ORGANIZATION_ID_OPENAI") )
 MINION_COLLECTIONID = str( os.getenv("MINION_COLLECTION_ID") )
@@ -125,6 +126,12 @@ def updateCardArtURLForAllCards(collectionID):
     collectionID = str(collectionID)
     urlList =  appwriterUtil.updateCardArtURLAttributes(collectionID)
     return { "urlList" : urlList }
+
+@app.route("/updateCardDescriptionForAllCards/<collectionID>", methods = ['get'])
+def updateCardDescriptionForAllCards(collectionID):
+    collectionID = str(collectionID)
+    descriptionList =  appwriterUtil.updateCardDescriptionAttributes(collectionID)
+    return { "descriptionList" : descriptionList }
 
 @app.route("/getAllCardArtURLs/<collectionID>", methods = ['get'])
 def getAllCardArtURLs(collectionID):

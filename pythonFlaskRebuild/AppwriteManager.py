@@ -117,7 +117,7 @@ class AppwriteManager():
       self.log.info(url)
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       self.log.info("\n jsonResponse : \n" + str(jsonResponse) + "\n \n \n")
-      cardArtURLList = []
+      newDescriptionsList = []
       totalDocuments = int(jsonResponse['total'])
       for index in range(0,totalDocuments - 1):
         documentID = str(jsonResponse['documents'][index]['$id'])
@@ -125,9 +125,9 @@ class AppwriteManager():
         databases = Databases(self.CLIENT)
         newDescription = description[2:-1]
         # self.log.info("updating " + str(jsonResponse['documents'][index]['cardName']) + "'s cardArt URL to : " + cardArtURL + " \n ")
-        cardArtURLList.append({ "documentID" : str(documentID), "cardName" : str(cardName), "cardURL" : str(cardArtURL) })
-        result = databases.update_document( self.DATABASE_ID, collectionID, documentID, data ={ "cardArt" : str(cardArtURL) } )
-      return cardArtURLList
+        newDescriptionsList.append({ "documentID" : str(documentID), "cardName" : str(cardName), "description" : str(newDescription) })
+        result = databases.update_document( self.DATABASE_ID, collectionID, documentID, data ={ "description" : str(newDescription) } )
+      return newDescriptionsList
 
     def cleanResetCollectionDocuments(self, collectionID):# payload will have the documentID
       url = "https://appwrite.devdylan.us/v1/databases/" + self.DATABASE_ID + "/collections/" + collectionID + "/documents?queries[0]=limit(100)"
