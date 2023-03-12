@@ -125,7 +125,7 @@ def deleteSingleCardByCollectionAndDocID(collectionID,documentID):
 def updateCardArtURLForAllCards(collectionID):
     collectionID = str(collectionID)
     urlList =  appwriterUtil.updateCardArtURLAttributes(collectionID)
-    return { "urlList" : urlList }
+    return { "cardArt" : urlList }
 
 @app.route("/updateCardDescriptionForAllCards/<collectionID>", methods = ['get'])
 def updateCardDescriptionForAllCards(collectionID):

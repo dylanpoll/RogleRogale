@@ -83,16 +83,28 @@ class AppwriteManager():
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       self.log.info("\n jsonResponse : \n" + str(jsonResponse) + "\n \n \n")
       cardArtURLList = []
-      totalDocuments = int(jsonResponse['total'])
+      totalDocuments = int(jsonResponse['total'])      
+      if totalDocuments >= 100:
+        totalDocuments = 100
       for index in range(0,totalDocuments - 1):
+        print(index)
+        databases = Databases(self.CLIENT)
         documentID = str(jsonResponse['documents'][index]['$id'])
         cardName = str(jsonResponse['documents'][index]['cardName'])
-        databases = Databases(self.CLIENT)
         cardArtFileSaveName = str(jsonResponse['documents'][index]['cardName']).replace(" ", "-") +'.png'
-        cardArtURL = self.HOST_URL + "/cardArt/" + cardArtFileSaveName
+        cardArtURL = str(self.HOST_URL) + "/cardArt/" + str(cardArtFileSaveName)
         # self.log.info("updating " + str(jsonResponse['documents'][index]['cardName']) + "'s cardArt URL to : " + cardArtURL + " \n ")
-        cardArtURLList.append({ "documentID" : str(documentID), "cardName" : str(cardName), "cardURL" : str(cardArtURL) })
-        result = databases.update_document( self.DATABASE_ID, collectionID, documentID, data ={ "cardArt" : str(cardArtURL) } )
+        # print(str(self.DATABASE_ID) + ' ' + str(collectionID) + ' ' + str(documentID)) 
+        print(str(jsonResponse['documents'][index]))          
+        self.log.info(str(self.DATABASE_ID) + ' ' + str(collectionID) + ' ' + str(documentID))
+        cardArtURLList.append({ "documentID" : str(documentID), "cardName" : str(cardName), "cardArt" : str(cardArtURL) })
+        try:
+          data ={ "cardURL" : str(cardArtURL) } 
+          print(data)
+          result = databases.update_document( self.DATABASE_ID, collectionID, documentID, data ={ "cardArt" : str(cardArtURL) } )
+        except Exception as e:
+          self.log.error("\n================================================\nerror while attempting to update cardArt links \nIOError :\n" + str(e) )
+          print("\n================================================\nerror while attempting to update cardArt links \nIOError :\n" + str(e) )
       return cardArtURLList
 
     def getAllCardArtURLAttributes(self, collectionID):# payload will have the documentID
@@ -101,7 +113,9 @@ class AppwriteManager():
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       cardArtURLList = []
       # self.log.info(str(jsonResponse) + "\n \n \n")
-      totalDocuments = int(jsonResponse['total'])
+      totalDocuments = int(jsonResponse['total'])      
+      if totalDocuments >= 100:
+        totalDocuments = 100
       for index in range(0,totalDocuments - 1):
         # self.log.info(index)
         documentID = str(jsonResponse['documents'][index]['$id'])
@@ -118,7 +132,9 @@ class AppwriteManager():
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       self.log.info("\n jsonResponse : \n" + str(jsonResponse) + "\n \n \n")
       newDescriptionsList = []
-      totalDocuments = int(jsonResponse['total'])
+      totalDocuments = int(jsonResponse['total'])      
+      if totalDocuments >= 100:
+        totalDocuments = 100
       for index in range(0,totalDocuments - 1):
         documentID = str(jsonResponse['documents'][index]['$id'])
         description = str(jsonResponse['documents'][index]['description'])
@@ -209,7 +225,9 @@ class AppwriteManager():
       jsonResponse = requests.request("GET", url, headers={'X-Appwrite-Project': str(self.PROJECT)} , data = {}).json()
       cardArtURLList = []
       # self.log.info(str(jsonResponse) + "\n \n \n")
-      totalDocuments = int(jsonResponse['total'])
+      totalDocuments = int(jsonResponse['total'])      
+      if totalDocuments >= 100:
+        totalDocuments = 100
       for index in range(0,totalDocuments - 1):
         # self.log.info(index)
         documentID = str(jsonResponse['documents'][index]['$id'])
