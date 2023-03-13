@@ -141,3 +141,4 @@ dmypy.json
 .pyre/
 Dockerfile
 requirements.txt
+startup.sh
