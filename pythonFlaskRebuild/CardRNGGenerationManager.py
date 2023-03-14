@@ -96,7 +96,6 @@ class CardRNGGenerationManager():
       # cardArt = self.generateCardArt(prompt)
       attributeList = [ "attack",  "defence", "health", ]
       cardAttributes = {
-                "cardName": str(nameGenderAndRace['cardName']),
                 # "cardArt": str(cardArt),
                 "cardArt": "",
                 "attack": 0,
@@ -104,14 +103,14 @@ class CardRNGGenerationManager():
                 "deathDamage": 0,
                 "health": 0,
                 "castingCost": 0,
-                "alignment": str(random.choice(self.alignment)),
-                "sacrificeValue":  0,
+                "alignment": str(random.choice(self.alignment)),                "cardName": str(nameGenderAndRace['cardName']),
                 "race":  [str(nameGenderAndRace['race'])],
                 "status":  [str(random.choice(self.status))],
                 "reachCapabilities":  [str(random.choice(self.reachCapabilities))],
                 "activeAbilities": [str(random.choice(self.activeAbilities))],
                 "passiveAbilities":  [str(random.choice(self.passiveAbilities))],
                 "keyWords":  [str(random.choice(self.keyWords))],
+                "sacrificeValue":  0,
                 "description": "" 
       }
       descriptionContent = "Give me a short description (it must be between 45 and 50 words) for a fictional ( race: "  + str(cardAttributes["race"])[2:len(str(cardAttributes["race"]))-2] + " ) who identifies as a " + str(nameGenderAndRace['gender']) + " with " + str(cardAttributes["alignment"]) + " tendencies who's name is " + str(cardAttributes["cardName"])
@@ -129,8 +128,9 @@ class CardRNGGenerationManager():
 
       cardArtFileSaveNAme = str(nameGenderAndRace['cardName']).replace(" ", "-") +'.png'
       savedFilePath = os.path.join("./cardArt/" + cardArtFileSaveNAme)
+      print(savedFilePath)
       cardAttributes["cardArt"]  = self.HOST_URL + "/cardArt/" + cardArtFileSaveNAme
-      # self.log.info("saving card image at : " + str(cardAttributes["cardArt"]))
+      self.log.info("saving card image at : " + str(cardAttributes["cardArt"]))
       with open(savedFilePath, 'wb') as handler:
         handler.write(img_data)
 
@@ -159,7 +159,14 @@ class CardRNGGenerationManager():
         incriminatedAttribute = str(random.choice(attributeList))
         cardAttributes[incriminatedAttribute] = int(cardAttributes[incriminatedAttribute]) + 1
         totalStatDistributionPool = totalStatDistributionPool -1
+      cardAttributes["attack"]  = str(cardAttributes["attack"])
+      cardAttributes["deathDamage"]  = str(cardAttributes["deathDamage"])
+      cardAttributes["sacrificeValue"]  = str(cardAttributes["sacrificeValue"])
+      cardAttributes["castingCost"]  = str(cardAttributes["castingCost"])
+      cardAttributes["defence"]  = str(cardAttributes["defence"])
+      cardAttributes["health"]  = str(cardAttributes["health"])
       # self.log.info(str(cardAttributes))
+      # print(str(cardAttributes))
       return cardAttributes
 
     def createMonarch(self):# payload will have the card attributes etc
@@ -187,13 +194,14 @@ class CardRNGGenerationManager():
 
       prompt = "Generate fantasy art from the following prompt but inside a " + str(random.choice(ART_BACKGROUNDS)) + " . the prompt is : " + str(cardAttributes["description"])
       self.log.info("Art prompt : " + prompt)
-      img_data = requests.get(self.generateCardArt( prompt = prompt)).content #locally saving the image... will update code to use locally stored image links as openAI deletes theirs.
-      if img_data == False:
-        return False
-        
       cardArtFileSaveNAme = str(nameGenderAndRace['cardName']).replace(" ", "-") +'.png'
       savedFilePath = os.path.join("./cardArt/" + cardArtFileSaveNAme)
       cardAttributes["cardArt"]  = self.HOST_URL + "/cardArt/" + cardArtFileSaveNAme
+      img_data = requests.get(self.generateCardArt( prompt = prompt)).content #locally saving the image... will update code to use locally stored image links as openAI deletes theirs.
+      if img_data == False:
+        return False
+      # if os.path.exists(savedFilePath) == False:
+      #   os.
       with open(savedFilePath, 'wb') as handler:
         handler.write(img_data)
       return cardAttributes

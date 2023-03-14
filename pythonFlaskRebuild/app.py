@@ -115,6 +115,15 @@ def cleanCollection(collectionID):
     response = appwriterUtil.cleanResetCollectionDocuments(collectionID)
     return response
 
+@app.route("/update1document/<collectionID>/<documentID>" , methods = ['post'])
+def update1document(collectionID,documentID):    
+    payload = request.get_json(silent=False) # silent means if it fails or not silently.
+    if not payload: 
+        return { "Error" : " failed to pass a payload."}
+    collectionID = str(collectionID)
+    response = appwriterUtil.update1documentID(collectionID, documentID, payload)
+    return response
+
 @app.route("/deleteSingleCardByCollectionAndDocID/<collectionID>/<documentID>" , methods = ['get'])
 def deleteSingleCardByCollectionAndDocID(collectionID,documentID):
     collectionID = str(collectionID)
